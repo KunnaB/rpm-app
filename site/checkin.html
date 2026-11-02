@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Check in | Renewed Purpose Ministry</title>
+  <meta name="theme-color" content="#141414">
+  <meta name="robots" content="noindex">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>body { padding-bottom: 0; }</style>
+</head>
+<body data-page="checkin">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.2a8.5 8.5 0 1 1 15.4-4.7z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    </defs>
+  </svg>
+
+  <main class="checkin-wrap" id="app" tabindex="-1">
+    <div class="center">
+      <img class="checkin-logo" id="logo" alt="Renewed Purpose Ministry">
+      <h1 id="heading">Welcome</h1>
+    </div>
+
+    <div class="field">
+      <label for="service">Service</label>
+      <select id="service"></select>
+    </div>
+
+    <!-- Choose -->
+    <section id="v-choose">
+      <div id="welcome-back" hidden class="card center">
+        <p style="margin-bottom:6px">Welcome back,</p>
+        <h2 id="wb-name"></h2>
+        <button class="btn block" type="button" id="wb-go" style="min-height:64px;font-size:1.15rem">Check me in</button>
+        <p style="margin:12px 0 0"><button class="btn ghost" type="button" id="wb-not">Not you?</button></p>
+      </div>
+      <div class="big-choice" id="choices">
+        <button class="btn" type="button" id="c-regular">I'm a regular</button>
+        <button class="btn secondary" type="button" id="c-first">First time here</button>
+      </div>
+    </section>
+
+    <!-- Regular -->
+    <section id="v-regular" hidden>
+      <form class="card" id="f-regular" novalidate>
+        <h2>Good to see you</h2>
+        <div class="field">
+          <label for="r-name">Your name</label>
+          <input id="r-name" name="name" type="text" autocomplete="name" maxlength="100" required>
+        </div>
+        <label class="check field"><input type="checkbox" name="remember" checked> Remember me on this phone so next time is one tap</label>
+        <div class="hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button class="btn block" type="submit">Check in</button>
+        <p><button class="btn ghost block" type="button" data-back>Back</button></p>
+        <div role="status" class="msg"></div>
+      </form>
+    </section>
+
+    <!-- First timer -->
+    <section id="v-first" hidden>
+      <form class="card" id="f-first" novalidate>
+        <h2>We're so glad you came</h2>
+        <p class="muted">Tell us a little about you so we can welcome you properly.</p>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" maxlength="150"></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="30"></div>
+        <div class="field">
+          <label for="f-heard">How did you hear about us?</label>
+          <select id="f-heard" name="howHeard">
+            <option value="">Choose one</option>
+            <option>Friend or family</option>
+            <option>Social media</option>
+            <option>YouTube</option>
+            <option>WhatsApp</option>
+            <option>Walked past</option>
+            <option>Online search</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-prayer">Anything we can pray with you about? (optional)</label><textarea id="f-prayer" name="prayer" maxlength="2000"></textarea></div>
+        <label class="check field"><input type="checkbox" name="consent"> Yes, I'm happy for the church to contact me by email, phone or message to follow up on my visit.</label>
+        <p class="small muted">We use these details to welcome you and, only if you tick the box above, to follow up. We keep them for up to 12 months. Read our <a href="privacy.html">privacy notice</a>.</p>
+        <div class="hp" aria-hidden="true"><input name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button class="btn block" type="submit">Check in</button>
+        <p><button class="btn ghost block" type="button" data-back>Back</button></p>
+        <div role="status" class="msg"></div>
+      </form>
+    </section>
+
+    <!-- Usher counter -->
+    <section id="v-usher" hidden>
+      <div class="card center">
+        <h2>Headcount</h2>
+        <p class="muted small">Tap + for each person. Submit when the count is complete.</p>
+        <div class="tally">
+          <button class="btn secondary" type="button" id="u-minus" aria-label="Remove one">&minus;</button>
+          <output id="u-count" aria-live="polite">0</output>
+          <button class="btn" type="button" id="u-plus" aria-label="Add one">+</button>
+        </div>
+        <button class="btn block" type="button" id="u-submit">Submit headcount</button>
+        <p><button class="btn ghost" type="button" id="u-reset">Reset to zero</button></p>
+        <div role="status" class="msg"></div>
+      </div>
+    </section>
+
+    <!-- Done -->
+    <section id="v-done" hidden>
+      <div class="card center">
+        <svg aria-hidden="true" style="width:56px;height:56px;stroke:var(--ok);margin:0 auto 8px;display:block"><use href="#i-check"/></svg>
+        <h2 id="done-title">You're checked in</h2>
+        <p id="done-text" class="muted"></p>
+        <div id="done-wa"></div>
+        <p style="margin-top:16px"><a href="index.html">Go to the RPM app</a></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var C = window.RPM_CONFIG, R = window.RPM;
+    var $ = function (id) { return document.getElementById(id); };
+    var views = ["v-choose", "v-regular", "v-first", "v-usher", "v-done"];
+    function show(id) {
+      views.forEach(function (v) { $(v).hidden = v !== id; });
+      $("app").focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    }
+
+    // Logo
+    var logo = $("logo");
+    if (C.logoDark) { logo.src = C.logoDark; logo.onerror = function () { logo.remove(); }; } else logo.remove();
+
+    // Services, with today's current or upcoming one selected
+    var sel = $("service"), now = R.londonNow(), picked = "Other";
+    var todays = (C.serviceTimes || []).filter(function (s) { return s.day === now.dow; });
+    todays.forEach(function (s) {
+      var start = R.toMins(s.time), end = start + (s.durationMins || 120);
+      if (now.mins >= start - 90 && now.mins < end) picked = s.name;
+    });
+    if (picked === "Other" && todays.length) picked = todays[0].name;
+    (C.serviceTimes || []).concat([{ name: "Other" }]).forEach(function (s) {
+      var o = document.createElement("option");
+      o.textContent = s.name;
+      if (s.day !== undefined) o.textContent += " (" + R.DAYS[s.day] + ")";
+      o.value = s.name;
+      if (s.name === picked) o.selected = true;
+      sel.appendChild(o);
+    });
+
+    function serviceKey() { return now.date + "|" + sel.value; }
+    function waButton() {
+      var link = R.safeUrl(C.whatsapp && C.whatsapp.channelLink);
+      if (!link) return "";
+      return '<p class="muted" style="margin-top:12px">Get our daily devotional on your phone:</p><a class="btn whatsapp block" target="_blank" rel="noopener" href="' + R.esc(link) + '"><svg aria-hidden="true"><use href="#i-chat"/></svg>Join our WhatsApp Channel</a>';
+    }
+    function done(title, text, wa) {
+      $("done-title").textContent = title;
+      $("done-text").textContent = text;
+      $("done-wa").innerHTML = wa ? waButton() : "";
+      show("v-done");
+    }
+    function setBusy(form, busy, label) {
+      var b = form.querySelector("button[type=submit]");
+      b.disabled = busy; b.textContent = busy ? "Sending..." : label;
+    }
+    function fail(form, text) {
+      form.querySelector(".msg").innerHTML = '<div class="notice err">' + R.esc(text) + '</div>';
+    }
+
+    // Usher mode
+    var params = new URLSearchParams(location.search);
+    if (params.get("mode") === "usher") {
+      $("heading").textContent = "Usher headcount";
+      var count = 0, out = $("u-count");
+      var saved = R.store("usher:" + now.date);
+      if (saved && saved.service === sel.value) count = saved.count;
+      var paint = function () { out.textContent = count; R.store("usher:" + now.date, { service: sel.value, count: count }); };
+      paint();
+      $("u-plus").onclick = function () { count++; paint(); };
+      $("u-minus").onclick = function () { if (count > 0) count--; paint(); };
+      $("u-reset").onclick = function () { count = 0; paint(); };
+      $("u-submit").onclick = function () {
+        var box = $("v-usher").querySelector(".msg"), b = $("u-submit");
+        if (!count) { box.innerHTML = '<div class="notice err">The count is zero.</div>'; return; }
+        b.disabled = true; b.textContent = "Sending...";
+        window.RPM_API_POST({ action: "headcount", service: sel.value, count: count })
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.error);
+            box.innerHTML = '<div class="notice ok">Headcount of ' + count + ' saved for ' + R.esc(sel.value) + '.' + (r.preview ? " (Preview mode: nothing was saved.)" : "") + '</div>';
+          })
+          .catch(function () { box.innerHTML = '<div class="notice err">Did not send. Check the connection and try again. Your count is kept.</div>'; })
+          .then(function () { b.disabled = false; b.textContent = "Submit headcount"; });
+      };
+      show("v-usher");
+      return;
+    }
+
+    // Remembered regular
+    var me = R.store("regular");
+    function paintWelcome() {
+      me = R.store("regular");
+      $("welcome-back").hidden = !me || !me.name;
+      $("choices").hidden = !!(me && me.name);
+      if (me && me.name) $("wb-name").textContent = me.name;
+    }
+    paintWelcome();
+    $("wb-not").onclick = function () { R.store("regular", null); paintWelcome(); };
+
+    function checkInRegular(name, form) {
+      if (R.store("done:" + serviceKey())) { done("You're already checked in", "Thank you, " + name + ". Enjoy the service.", false); return Promise.resolve(); }
+      return window.RPM_API_POST({ action: "checkin", type: "regular", service: sel.value, name: name, website: form ? form.website.value : "" })
+        .then(function (r) {
+          if (!r.ok) throw new Error(r.error);
+          R.store("done:" + serviceKey(), true);
+          done("You're checked in", "Thank you, " + name + ". Enjoy the service." + (r.preview ? " (Preview mode: nothing was saved.)" : ""), false);
+        });
+    }
+    $("wb-go").onclick = function () {
+      var b = this; b.disabled = true; b.textContent = "Sending...";
+      checkInRegular(me.name).catch(function () { alertBox("Sorry, that did not send. Please try again."); })
+        .then(function () { b.disabled = false; b.textContent = "Check me in"; });
+    };
+    function alertBox(text) {
+      var d = document.createElement("div"); d.className = "notice err"; d.setAttribute("role", "status"); d.textContent = text;
+      $("welcome-back").appendChild(d);
+    }
+
+    $("c-regular").onclick = function () { show("v-regular"); $("r-name").focus(); };
+    $("c-first").onclick = function () { show("v-first"); $("f-name").focus(); };
+    document.querySelectorAll("[data-back]").forEach(function (b) { b.onclick = function () { show("v-choose"); }; });
+
+    $("f-regular").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var f = this, name = f.name.value.trim();
+      if (!name) { fail(f, "Please enter your name."); f.name.focus(); return; }
+      if (f.remember.checked) R.store("regular", { name: name });
+      setBusy(f, true, "Check in");
+      checkInRegular(name, f).catch(function () { fail(f, "Sorry, that did not send. Please check your connection and try again."); })
+        .then(function () { setBusy(f, false, "Check in"); paintWelcome(); });
+    });
+
+    $("f-first").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var f = this, name = f.name.value.trim(), email = f.email.value.trim(), phone = f.phone.value.trim();
+      if (!name) { fail(f, "Please enter your name."); f.name.focus(); return; }
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { fail(f, "Please check your email address."); f.email.focus(); return; }
+      if (f.consent.checked && !email && !phone) { fail(f, "Please add an email or phone number so we can contact you."); f.email.focus(); return; }
+      setBusy(f, true, "Check in");
+      window.RPM_API_POST({
+        action: "checkin", type: "first", service: sel.value, name: name, email: email, phone: phone,
+        howHeard: f.howHeard.value, prayer: f.prayer.value.trim(), consent: f.consent.checked, website: f.website.value
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.error);
+        R.store("regular", { name: name });
+        R.store("done:" + serviceKey(), true);
+        done("Welcome, " + name.split(" ")[0], "Thank you for joining us today. We're so glad you're here." + (r.preview ? " (Preview mode: nothing was saved.)" : ""), true);
+      }).catch(function () { fail(f, "Sorry, that did not send. Please check your connection and try again."); })
+        .then(function () { setBusy(f, false, "Check in"); });
+    });
+  })();
+  </script>
+</body>
+</html>

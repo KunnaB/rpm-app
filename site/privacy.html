@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy notice | Renewed Purpose Ministry</title>
+  <meta name="theme-color" content="#141414">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <style>body { padding-bottom: 0; } main { max-width: 720px; } h2 { margin-top: 1.6em; }</style>
+</head>
+<body data-page="privacy">
+  <main id="app">
+    <p><a href="index.html">Back to the app</a></p>
+    <h1>Privacy notice</h1>
+    <p class="muted">Last updated: <span id="updated">November 2026</span></p>
+
+    <p>Renewed Purpose Ministry ("we") is responsible for the personal information you give us through this website and app. This notice explains what we collect, why, who can see it and how long we keep it.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Service check-in:</strong> your name and the service you attended.</li>
+      <li><strong>First-time visitors:</strong> your name, email, phone number, how you heard about us, any prayer request you choose to share, and whether you agreed to be contacted.</li>
+      <li><strong>Prayer requests:</strong> your name (optional) and your request.</li>
+      <li><strong>Headcounts:</strong> a number only, with no names.</li>
+    </ul>
+    <p>Because attending church can reveal your religious beliefs, we treat this information as special category data and take extra care with it.</p>
+
+    <h2>Why we use it</h2>
+    <ul>
+      <li>To know who attended, plan services and care for our church family.</li>
+      <li>To welcome first-time visitors. We only follow up by email, phone or message if you tick the box agreeing to it.</li>
+      <li>To pray for the requests you send us.</li>
+    </ul>
+    <p>We rely on our legitimate activities as a not-for-profit religious body, for people in regular contact with us, and on your consent for follow-up contact. You can withdraw consent at any time by contacting us.</p>
+
+    <h2>Who can see it</h2>
+    <p>Only named members of our church team who need it: the follow-up team, the prayer team and church leaders. The information is stored in a Google Sheet in the church's Google account and emails are sent through Gmail, so Google processes it on our behalf. We never sell your information or share it for marketing.</p>
+
+    <h2>How long we keep it</h2>
+    <ul>
+      <li>First-time visitor details are deleted after 12 months, unless you become a member.</li>
+      <li>Prayer requests are deleted after 12 months.</li>
+      <li>Names on check-in records are removed after 12 months. We keep the attendance numbers.</li>
+    </ul>
+
+    <h2>On your phone</h2>
+    <p>If you choose "Remember me" when checking in, your name is saved on your own phone only, so next time is one tap. You can clear it with "Not you?" on the check-in page. Sermon videos come from YouTube and only load when you press play.</p>
+
+    <h2>WhatsApp</h2>
+    <p>Our daily devotional is posted to our WhatsApp Channel and group. We do not send automated messages to individuals.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask to see, correct or delete the information we hold about you, or object to how we use it. Contact us at <a id="contact" href="#">[church email]</a>. If you are unhappy with how we handle your information, you can complain to the Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk</a>.</p>
+  </main>
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      var e = (window.RPM_CONFIG || {}).contactEmail, a = document.getElementById("contact");
+      if (e) { a.textContent = e; a.href = "mailto:" + e; }
+    })();
+  </script>
+</body>
+</html>

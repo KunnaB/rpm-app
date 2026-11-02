@@ -1,0 +1,5 @@
+.env
+whatsapp-server/data/
+.DS_Store
+.clasprc.json
+*.pyc

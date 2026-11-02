@@ -1,0 +1,21 @@
+{
+  "name": "Renewed Purpose Ministry",
+  "short_name": "RPM",
+  "description": "Daily devotionals, sermons, service times, events and prayer.",
+  "start_url": "./index.html#/home",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FAF7F2",
+  "theme_color": "#141414",
+  "lang": "en-GB",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Today's devotional", "url": "./index.html#/devotional" },
+    { "name": "Check in", "url": "./checkin.html" }
+  ]
+}

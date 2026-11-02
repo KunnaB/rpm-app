@@ -1,0 +1,49 @@
+# WAHA (WhatsApp HTTP API) behind Caddy with automatic HTTPS.
+# Values come from .env (created by setup-vm.sh, never committed).
+services:
+  waha:
+    image: ${WAHA_IMAGE:-devlikeapro/waha:latest}
+    container_name: waha
+    restart: unless-stopped
+    environment:
+      WHATSAPP_DEFAULT_ENGINE: NOWEB
+      WAHA_API_KEY: ${WAHA_API_KEY:?WAHA_API_KEY missing in .env}
+      WAHA_DASHBOARD_USERNAME: ${WAHA_DASHBOARD_USERNAME:-rpm}
+      WAHA_DASHBOARD_PASSWORD: ${WAHA_DASHBOARD_PASSWORD:?WAHA_DASHBOARD_PASSWORD missing in .env}
+      WHATSAPP_SWAGGER_USERNAME: ${WAHA_DASHBOARD_USERNAME:-rpm}
+      WHATSAPP_SWAGGER_PASSWORD: ${WAHA_DASHBOARD_PASSWORD}
+      WHATSAPP_RESTART_ALL_SESSIONS: "True"
+      WAHA_PRINT_QR: "False"
+      WAHA_LOCAL_STORE_BASE_DIR: /app/.sessions
+      WHATSAPP_FILES_FOLDER: /app/.media
+      TZ: Europe/London
+    volumes:
+      - ./data/sessions:/app/.sessions   # keeps the WhatsApp login across restarts
+      - ./data/media:/app/.media
+    expose:
+      - "3000"                            # only reachable through Caddy, never directly
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    depends_on: [waha]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      WAHA_DOMAIN: ${WAHA_DOMAIN:?WAHA_DOMAIN missing in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
+
+volumes:
+  caddy_data:
+  caddy_config:

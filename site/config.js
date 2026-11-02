@@ -17,7 +17,7 @@ window.RPM_CONFIG = {
   websiteUrl: "https://kunnab.github.io/rpm-app",
 
   // Google Apps Script web app URL. Leave empty to preview with sample content.
-  apiUrl: "",
+  apiUrl: "https://script.google.com/macros/s/AKfycbwE_Se_QHJ-80g28Ayt1KePq03u8jaaQ6Tt4QtXg2IuRw34JyMhEQ0VFRWQN9x_AEpw/exec",
 
   youtube: {
     channelUrl: "",   // e.g. https://www.youtube.com/@yourchannel
